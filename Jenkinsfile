@@ -24,6 +24,7 @@ pipeline{
                     script{
                         sh """
                         echo "hello this is Deploy"
+                        aaaaa
                         """
                     }
                 }
