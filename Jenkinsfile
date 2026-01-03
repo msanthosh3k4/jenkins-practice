@@ -54,7 +54,7 @@ pipeline{
             //     }
             // }
             when {
-                environment name: 'PROJECT', value: 'EXPENSE'
+                environment name: 'PROJECT', value: 'EXPENSE1'
             }
                 steps{
                     script{
