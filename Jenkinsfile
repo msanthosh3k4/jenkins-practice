@@ -3,7 +3,10 @@ pipeline{
     environment {
         PROJECT = 'EXPENSE'
         }
-     options { disableConcurrentBuilds() }
+     options { 
+        disableConcurrentBuilds() 
+        timeout(time: 5, unit: 'SECONDS') 
+     }
         stages{
             stage("build"){
                 steps{
