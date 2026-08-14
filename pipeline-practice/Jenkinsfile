@@ -36,7 +36,7 @@ pipeline{
                 
             script{
                 sh """
-                    echo "Deploying to ${ENV}-${PROJECT}"
+                    echo "Deploying to ${ENV}-${PROJECT}-test"
                 """
             }
             }
