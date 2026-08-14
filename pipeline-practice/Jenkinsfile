@@ -12,9 +12,12 @@ pipeline{
         stage('Build'){
             steps{
                 script{
+                   echo "Project: ${params.PROJECT}"
+                    echo "Environment: ${params.ENV}"
+
                     sh """
-                        echo "Building ${PROJECT}"
-                        parameterizedBuild job: 'pipeline-practice', parameters: [string(name: 'PROJECT', value: "${PROJECT}"), string(name: 'ENV', value: "${ENV}")]
+                        echo "Building ${params.PROJECT}"
+                        echo "Deploying to ${params.ENV}"
                     """
                 }
             }
