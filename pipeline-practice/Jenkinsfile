@@ -5,7 +5,7 @@ pipeline{
         ENV = "PROD"
     }
     parameters{
-        string(name: 'PROJECT', defaultValue: 'Expense-Practice', description: 'Project Name')
+        string(name: 'PROJECT', choices: ['Expense', 'Robshop', 'Carpool'], description: 'Project Name')
         choice(name: 'ENV', choices: ['DEV', 'QA', 'PROD'], description: 'Environment to deploy')
     }
     stages{
