@@ -1,0 +1,51 @@
+pipeline{
+    agent any
+    PROJECT = "Expense-Practice"
+    ENV = "PROD"
+    stages{
+        stage('Build'){
+            steps{
+                script{
+                    sh """
+                        echo "Building ${PROJECT}"
+                    """
+                }
+            }
+        }
+        stage('Test'){
+            steps{
+                script{
+                    sh """
+                        echo "Running Tests"
+                    """
+                }
+            }
+        }
+        stage('Deploy'){
+            steps{
+                if (ENV == "PROD") {
+                input(
+                    message: "Do you want to deploy to PROD?",
+                    ok: "Deploy"
+                )
+            }
+            script{
+                sh """
+                    echo "Deploying to ${ENV}"
+                """
+            }
+            }
+        }
+    }
+    post{
+        always{
+            echo "This will always run"
+        }
+        success{
+            echo "This will run only if successful"
+        }
+        failure{
+            echo "This will run only if failed"
+        }
+    }
+}
