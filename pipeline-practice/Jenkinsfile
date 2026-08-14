@@ -1,7 +1,9 @@
 pipeline{
     agent any
-    PROJECT = "Expense-Practice"
-    ENV = "PROD"
+    environment{
+        PROJECT = "Expense-Practice"
+        ENV = "PROD"
+    }
     stages{
         stage('Build'){
             steps{
