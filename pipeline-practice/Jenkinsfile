@@ -4,12 +4,17 @@ pipeline{
         PROJECT = "Expense-Practice"
         ENV = "PROD"
     }
+    parameters{
+        string(name: 'PROJECT', defaultValue: 'Expense-Practice', description: 'Project Name')
+        choice(name: 'ENV', choices: ['DEV', 'QA', 'PROD'], description: 'Environment to deploy')
+    }
     stages{
         stage('Build'){
             steps{
                 script{
                     sh """
                         echo "Building ${PROJECT}"
+                        parameterizedBuild job: 'pipeline-practice', parameters: [string(name: 'PROJECT', value: "${PROJECT}"), string(name: 'ENV', value: "${ENV}")]
                     """
                 }
             }
