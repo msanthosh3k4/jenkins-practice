@@ -25,12 +25,15 @@ pipeline{
         }
         stage('Deploy'){
             steps{
-                if (ENV == "PROD") {
+                script{
+                    if (ENV == "PROD") {
                 input(
                     message: "Do you want to deploy to PROD?",
                     ok: "Deploy"
                 )
             }
+                }
+                
             script{
                 sh """
                     echo "Deploying to ${ENV}"
