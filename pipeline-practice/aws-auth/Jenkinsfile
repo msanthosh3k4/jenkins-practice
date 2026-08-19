@@ -1,0 +1,40 @@
+pipeline{
+    agent any
+    environment{
+        PROJECT = "Expense-Practice"
+        ENV = "PROD"
+    }
+    options {
+        disableConcurrentBuilds()
+        timestamps()
+        timeout(time: 1, unit: 'MINUTES')
+    }
+    parameters{
+        choice(name: 'PROJECT', choices: ['Expense', 'Robshop', 'Carpool'], description: 'Project Name')
+        choice(name: 'ENV', choices: ['DEV', 'QA', 'PROD'], description: 'Environment to deploy')
+    }
+    stages{
+        stage('Build'){
+            steps{
+                script{
+                   withAWS(region: 'us-east-1', credentials: 'aws-creds-id') {
+                    sh """
+                        terraform init
+                    """
+                   }
+                }
+            }
+        }
+    }
+    post{
+        always{
+            echo "This will always run"
+        }
+        success{
+            echo "This will run only if successful"
+        }
+        failure{
+            echo "This will run only if failed"
+        }
+    }
+}
