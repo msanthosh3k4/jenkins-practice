@@ -1,8 +1,13 @@
 pipeline{
-    agent any
+    agent {label "AGENT-1"}
     environment{
         PROJECT = "Expense-Practice"
         ENV = "PROD"
+    }
+    options {
+        disableConcurrentBuilds()
+        timestamps()
+        timeout(time: 1, unit: 'MINUTES')
     }
     parameters{
         choice(name: 'PROJECT', choices: ['Expense', 'Robshop', 'Carpool'], description: 'Project Name')
@@ -23,11 +28,33 @@ pipeline{
             }
         }
         stage('Test'){
-            steps{
-                script{
-                    sh """
-                        echo "Running Tests"
-                    """
+            parallel{
+                stage('Sonar Qube Scan'){
+                    steps{
+                        script{
+                            sh """
+                                echo "Sonar Qube Scan"
+                            """
+                        }
+                    }
+                }
+                stage('Unit Tests'){
+                    steps{
+                        script{
+                            sh """
+                                echo "Running Unit Tests"
+                            """
+                        }
+                    }
+                }
+                stage('Building Artifacts'){
+                    steps{
+                        script{
+                            sh """
+                                echo "Building Artifacts"
+                            """
+                        }
+                    }
                 }
             }
         }
@@ -35,18 +62,18 @@ pipeline{
             steps{
                 script{
                     if (ENV == "PROD") {
-                input(
-                    message: "Do you want to deploy to PROD?",
-                    ok: "Deploy"
-                )
-            }
+                        input(
+                            message: "Do you want to deploy to PROD?",
+                            ok: "Deploy"
+                        )
+                    }
                 }
                 
-            script{
-                sh """
-                    echo "Deploying to ${ENV}-${PROJECT}-test"
-                """
-            }
+                script{
+                    sh """
+                        echo "Deploying to ${ENV}-${PROJECT}-test"
+                    """
+                }
             }
         }
     }
