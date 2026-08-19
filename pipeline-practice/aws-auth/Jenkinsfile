@@ -7,7 +7,7 @@ pipeline{
     options {
         disableConcurrentBuilds()
         timestamps()
-        timeout(time: 59, unit: 'MINUTES')
+        timeout(time: 49, unit: 'MINUTES')
     }
     parameters{
         choice(name: 'PROJECT', choices: ['Expense', 'Robshop', 'Carpool'], description: 'Project Name')
