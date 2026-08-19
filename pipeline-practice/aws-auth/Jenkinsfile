@@ -19,6 +19,7 @@ pipeline{
                 script{
                    withAWS(region: 'us-east-1', credentials: 'aws-creds-id') {
                     sh """
+                        aws sts get-caller-identity
                         terraform init
                     """
                    }
